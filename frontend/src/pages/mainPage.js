@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Navbar } from "../component/navbar";
-import { Context } from "../store/appContext";
+import { Context } from "@/store/appContext";
 import "../../styles/mainPage.css";
 
 export const MainPage = () => {

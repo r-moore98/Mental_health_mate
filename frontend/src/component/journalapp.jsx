@@ -16,7 +16,7 @@ export const JournalApp = () => {
     const fetchJournalEntries = async () => {
       try {
         const response = await fetch(
-          "https://3001-4geeksacademy-mhm-fhe4vyifciv.ws-us101.gitpod.io/api/get_journal"
+          "http://localhost:3001/api/get_journal"
         );
 
         if (!response.ok) {

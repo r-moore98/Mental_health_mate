@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import "../../styles/navbar.css";
+import "@styles/navbar.css";
 import context from "react-bootstrap/esm/AccordionContext";
 
 export const Navbar = () => {

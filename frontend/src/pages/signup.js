@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 import '../../styles/signup.css'
-import { Context } from "../store/appContext";
+import { Context } from "@/store/appContext";
 
 export const Signup = () => {
     const { store, actions } = useContext(Context);
