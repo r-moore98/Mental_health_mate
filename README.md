@@ -1,71 +1,112 @@
-# WebApp boilerplate with React JS and Flask API
+# Mental Health Mate
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+Mental Health Mate is a full-stack web application built with React and Flask that aims to provide a supportive, easy-to-use experience for users exploring mental wellness resources and tracking their mental health journey.
 
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+## Features
 
-### 1) Installation:
+- User-friendly React frontend.
+- Flask REST API backend.
+- Database integration with SQLAlchemy.
+- Environment-based configuration.
+- Support for local development and deployment.
+- Modular structure for future expansion.
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+## Tech Stack
 
-It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
+- Frontend: React.js
+- Backend: Flask
+- Database: PostgreSQL / SQLite / MySQL
+- ORM: SQLAlchemy
+- Dependency Management: Pipenv / npm
+- Deployment: Render / Heroku
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+## Project Structure
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+- `src/front`: React frontend.
+- `src/api`: Flask backend API.
+- `.env`: Environment variables.
+- `migrations/`: Database migration files.
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+## Installation
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
+### Prerequisites
 
-### Backend Populate Table Users
+Make sure you have the following installed:
 
-To insert test users in the database execute the following command:
+- Python 3.10+
+- Node.js 14+
+- Pipenv
+- A database engine such as PostgreSQL, SQLite, or MySQL
 
-```sh
-$ flask insert-test-users 5
+### Backend Setup
+
+1. Install backend dependencies:
+   ```bash
+   pipenv install
+   ```
+
+2. Create a `.env` file from the example file:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Configure your `DATABASE_URL` in `.env`.
+
+4. Run database migrations:
+   ```bash
+   pipenv run migrate
+   pipenv run upgrade
+   ```
+
+5. Start the backend:
+   ```bash
+   pipenv run start
+   ```
+
+### Frontend Setup
+
+1. Install frontend dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run start
+   ```
+
+## Database
+
+This project uses SQLAlchemy for database abstraction. Depending on your setup, you can use one of the following database URLs:
+
+- SQLite: `sqlite:////test.db`
+- MySQL: `mysql://username:password@localhost:port/example`
+- PostgreSQL: `postgres://username:password@localhost:5432/example`
+
+## Seeding Test Users
+
+To create sample users in the database, run:
+
+```bash
+flask insert-test-users 5
 ```
 
-And you will see the following message:
+## Deployment
 
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
+This application is ready to deploy on Render or Heroku. Make sure your environment variables are configured correctly before deployment.
 
-To update with all yours tables you can edit the file app.py and go to the line 80 to insert the code to populate others tables
+## Disclaimer
 
-### Front-End Manual Installation:
+Mental Health Mate is intended for educational and informational purposes only. It is not a substitute for professional mental health care, diagnosis, or emergency support. If you or someone you know is in crisis, contact local emergency services or a licensed mental health professional immediately.
 
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
+## Contributing
 
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
+Contributions are welcome. If you'd like to improve the project, please open an issue or submit a pull request.
 
-## Publish your website!
+## License
 
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
+Add your license here.
 
-### Contributors
+## Acknowledgments
 
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+This project was originally based on a 4Geeks Academy React + Flask starter template. Additional customization and improvements were made for the Mental Health Mate project.
