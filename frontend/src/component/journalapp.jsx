@@ -12,57 +12,51 @@ export const JournalApp = () => {
   const [searchedEntries, setSearchedEntries] = useState([]);
   const [isEntrySubmitted, setIsEntrySubmitted] = useState(false);
 
+  // Updated to use "sessionStorage" and "token" to match your flux.js
+  const fetchJournalEntries = async () => {
+    const token = sessionStorage.getItem("token");
+    try {
+      const response = await fetch("http://127.0.0.1:3001/api/get_journal", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (!response.ok) throw new Error("Error retrieving journal entries");
+      const data = await response.json();
+      setJournalEntries(data);
+    } catch (error) {
+      console.error("Error retrieving journal entries:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchJournalEntries = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3001/api/get_journal"
-        );
-
-        if (!response.ok) {
-          throw new Error("Error retrieving journal entries");
-        }
-
-        const data = await response.json();
-        setJournalEntries(data);
-      } catch (error) {
-        console.error("Error retrieving journal entries:", error);
-      }
-    };
-
     fetchJournalEntries();
   }, []);
 
   const handleClick = async (e) => {
     e.preventDefault();
-
+    const token = sessionStorage.getItem("token"); // Match storage name
     const data = { date, mood, content };
 
     try {
       const response = await fetch(
-        "https://3001-4geeksacademy-mhm-fhe4vyifciv.ws-us101.gitpod.io/api/post_journal",
+        "http://127.0.0.1:3001/api/post_journal", // Corrected URL path
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(data),
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Error creating entry");
-      }
+      if (!response.ok) throw new Error("Error creating entry");
 
       console.log("Entry created successfully!");
-
-      // Reset the input fields
       setDate("");
       setMood("");
       setContent("");
-
-      // Set the success flag
       setIsEntrySubmitted(true);
+      fetchJournalEntries(); // Refresh the list after adding
     } catch (error) {
       console.error("Error creating entry:", error);
     }
@@ -169,11 +163,12 @@ export const JournalApp = () => {
             <Card>
               <CardBody>
                 <h3>Search Result:</h3>
-                {searchedEntries.map((entry) => (
-                  <div className="search-result-entry" key={entry.id}>
-                    <p>Date: {entry.date}</p>
-                    <p>Mood: {entry.mood}</p>
-                    <p>Content: {entry.content}</p>
+                {searchedEntries.map((entry, index) => (
+                  // Use index as a key if entry.id isn't available
+                  <div className="search-result-entry" key={index}>
+                    <p><strong>Date:</strong> {entry.date}</p>
+                    <p><strong>Mood:</strong> {entry.mood}</p>
+                    <p><strong>Content:</strong> {entry.content}</p>
                     <hr />
                   </div>
                 ))}

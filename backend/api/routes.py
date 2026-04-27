@@ -88,15 +88,16 @@ def meditation():
 @api.route('/get_journal', methods=['GET'])
 def get_entries():
     entries = JournalEntries.query.all()
+    # Ensure this returns a list of dictionaries
     entries_data = [
         {
             'date': entry.date,
             'mood': entry.mood,
             'content': entry.content
-        }
-        for entry in entries
+        } for entry in entries
     ]
     return jsonify(entries_data), 200
+
 
 @api.route('/post_journal', methods=['POST'])
 def post_entries():

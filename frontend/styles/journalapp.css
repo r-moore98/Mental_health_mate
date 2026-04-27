@@ -72,21 +72,29 @@ hr {
 }
 
 .search-result h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
+    color: #333333;
+    font-weight: bold;
 }
 
 .search-result-entry {
+    background-color: #ffffff;
+    /* Ensures the box stays white */
     border-radius: 4px;
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    align-self: stretch;
 }
 
 .search-result-entry p {
-    margin: 5px 0;
+    color: #333333 !important;
+    /* Force a dark grey/black color */
+    margin: 8px 0;
+    text-align: left;
+    /* Better for readability */
+}
+
+.search-result-entry strong {
+    color: #011301;
 }
 
 .search-result-entry hr {
@@ -114,13 +122,13 @@ hr {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-  }
-  
-  .navbar-journal .navbar-brand {
+}
+
+.navbar-journal .navbar-brand {
     margin-left: 10px;
-  }
-  
-  .navbar-journal .navbar-brand img {
+}
+
+.navbar-journal .navbar-brand img {
     height: 30px;
     width: auto;
-  }
+}
