@@ -9,46 +9,45 @@ export const ResourcePage = () => {
   const [error, setError] = useState("");
   const [apiURL, setApiURL] = useState("");
 
-  const searchCondition = () => {
-    const apiUrl = `https://api.nhs.uk/mental-health/conditions/${condition}`;
-    const baseURL = "https://www.nhs.uk/conditions/";
+  const searchCondition = async () => {
+    if (!condition) return;
 
-    axios
-      .get(apiUrl, {
-        headers: {
-          "subscription-key": process.env.NHS_API_KEY,
-        },
-      })
-      .then((response) => {
-        setResult(response.data);
-        setError("");
-        setApiURL(baseURL + condition);
-      })
-      .catch((error) => {
-        console.error(error);
-        setResult(null);
-        setError("An error occurred. Please try again.");
-      });
+    try {
+      const formattedCondition = condition.trim().replace(/\s+/g, "_");
+
+      const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${formattedCondition}`;
+
+      const response = await axios.get(apiUrl);
+
+      setResult(response.data);
+      setError("");
+      setApiURL(response.data.content_urls.desktop.page);
+    } catch (err) {
+      console.error(err);
+      setResult(null);
+      setError("No results found. Try a different condition.");
+    }
   };
 
-  const fetchAdditionalInfo = (extension) => {
-    const apiUrl = `https://api.nhs.uk/mental-health/conditions/${condition}/${extension}`;
+  const fetchAdditionalInfo = async () => {
+    if (!condition) return;
 
-    axios
-      .get(apiUrl, {
-        headers: {
-          "subscription-key": process.env.NHS_API_KEY,
-        },
-      })
-      .then((response) => {
-        setResult(response.data);
-        setError("");
-      })
-      .catch((error) => {
-        console.error(error);
-        setResult(null);
-        setError("An error occurred. Please try again.");
-      });
+    try {
+      const formattedCondition = condition.trim().replace(/\s+/g, "_");
+
+      const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/mobile-sections/${formattedCondition}`;
+
+      const response = await axios.get(apiUrl);
+
+      setResult((prev) => ({
+        ...prev,
+        additionalInfo: response.data.lead.sections,
+      }));
+      setError("");
+    } catch (err) {
+      console.error(err);
+      setError("Could not fetch additional info.");
+    }
   };
 
   return (
@@ -57,6 +56,7 @@ export const ResourcePage = () => {
       <div className="resource-content">
         <h1 className="resource_welcome">Welcome to the Resource Page!</h1>
         <h2 className="resource-page-title">Condition Search</h2>
+
         <div className="container">
           <form>
             <input
@@ -64,11 +64,12 @@ export const ResourcePage = () => {
               className="form-control"
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              placeholder="Enter a condition"
+              placeholder="Enter a condition (e.g. anxiety, depression)"
             />
+
             <div className="search-button">
               <button
-                className="button"  
+                className="button"
                 type="button"
                 onClick={searchCondition}
               >
@@ -76,44 +77,51 @@ export const ResourcePage = () => {
               </button>
             </div>
           </form>
+
           {error && <p className="error-message">{error}</p>}
+
           <div id="result">
             {apiURL && (
               <p>
                 Website URL:{" "}
-                <a href={apiURL} target="_blank" rel="noopener noreferrer" className="website-link">
+                <a
+                  href={apiURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="website-link"
+                >
                   {apiURL}
                 </a>
               </p>
             )}
+
             {result && (
               <div>
-                <h2>{result.name}</h2>
-                <p>{result.description}</p>
+                <h2>{result.title}</h2>
+                <p>{result.extract}</p>
+
                 <div className="search-button">
                   <button
                     className="button"
-                    onClick={() => fetchAdditionalInfo("overview")}
+                    onClick={fetchAdditionalInfo}
                   >
-                    Fetch Overview
-                  </button>
-                  <button
-                    className="button"
-                    onClick={() => fetchAdditionalInfo("symptoms")}
-                  >
-                    Fetch Symptoms
-                  </button>
-                  <button
-                    className="button"
-                    onClick={() => fetchAdditionalInfo("treatment")}
-                  >
-                    Fetch Treatment
+                    Fetch More Details
                   </button>
                 </div>
+
                 {result.additionalInfo && (
                   <div>
-                    <h3>{result.additionalInfo.title}</h3>
-                    <p>{result.additionalInfo.content}</p>
+                    <h3>More Info</h3>
+                    {result.additionalInfo.slice(0, 3).map((section, index) => (
+                      <div key={index}>
+                        <h4>{section.line}</h4>
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: section.text,
+                          }}
+                        />
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>
