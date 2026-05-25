@@ -36,19 +36,28 @@ def login():
     get_login = request.get_json()
     email = get_login["email"]
     password = get_login["password"]
-
+    
     if not email or not password:
         return jsonify({'message': 'Email and password are required'}), 400
-
+        
     user = User.query.filter_by(email=email).first()
 
     if not user or user.password != password:
         return jsonify({'message': 'Invalid credentials'}), 401
 
-    # create token
+# --- ADD THIS PRINT LINE TO DEBUG ---
+    print("DEBUG -> User Found:", user.email, "Is Active Status:", getattr(user, 'is_active', 'No Column Found'))
+# ------------------------------------
+
+    if hasattr(user, 'is_active') and user.is_active is False:
+        return jsonify({'message': 'Access denied. Your account is inactive.'}), 403
+
+    # Create token
     expiration = datetime.timedelta(days=3)
-    access_token = create_access_token(identity= user.id, expires_delta= expiration)
-    return jsonify({'message': 'Logged in successfully.', 'access_token':access_token}), 200
+    access_token = create_access_token(identity=user.id, expires_delta=expiration)
+    
+    return jsonify({'message': 'Logged in successfully.', 'access_token': access_token}), 200
+
 
 @api.route('/get_condition/<condition>', methods=['GET'])
 def get_condition(condition):

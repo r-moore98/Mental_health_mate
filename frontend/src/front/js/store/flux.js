@@ -126,17 +126,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.status === 200) {
 						const data = response.data;
 
-						sessionStorage.setItem("token", data.access_token);
+						// 1. Check if the backend flagged the user as inactive
+						if (data.is_active === false) {
+							console.warn("Login failed: Account is inactive.");
+							// You can store an error message in your Flux store to show on the UI
+							setStore({ login_error: "Your account is inactive. Please contact support." });
+							return false;
+						}
 
+						// 2. Clear any previous errors and log the user in
+						sessionStorage.setItem("token", data.access_token);
 						setStore({
 							token: data.access_token,
-							user_name: data.user_name
+							user_name: data.user_name,
+							login_error: null
 						});
-
 						return true;
 					}
 				} catch (error) {
-					console.error("Login Error:", error);
+
+					// CHANGED: error.response.data.msg to error.response.data.message
+					if (error.response && error.response.data && error.response.data.message) {
+						setStore({ login_error: error.response.data.message });
+					} else {
+						setStore({ login_error: "An unexpected login error occurred." });
+					}
 				}
 				return false;
 			},
