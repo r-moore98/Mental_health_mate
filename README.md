@@ -60,7 +60,7 @@ Make sure you have the following installed:
 
 5. Start the backend:
    ```bash
-   pipenv run start
+   python3 -m backend.app
    ```
 
 ### Frontend Setup
