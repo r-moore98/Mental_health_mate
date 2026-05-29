@@ -1,4 +1,5 @@
 {
+  "homepage": "https://r-moore98.github.io/Mental_health_mate/",
   "name": "react-hello-webapp",
   "engines": {
     "node": "16.x"
@@ -8,7 +9,10 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack/webpack.dev.js --port 3000",
-    "build": "webpack --config webpack/webpack.prod.js"
+    "build": "webpack --config webpack/webpack.prod.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d public"
+
   },
   "author": {
     "name": "Alejandro Sanchez",
