@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Navbar } from "../component/navbar";
 import "../../styles/meditation.css";
-import { YOUTUBE_KEY } from "../config";
 
 export const Meditation = () => {
     const [condition, setCondition] = useState("");
