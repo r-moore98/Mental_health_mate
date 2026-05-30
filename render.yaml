@@ -6,6 +6,7 @@ services:
     plan: free
 
     runtime: python-3.11.8
+    
 
     buildCommand: "./render_build.sh"
     startCommand: "gunicorn backend.app:app"
