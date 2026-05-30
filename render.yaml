@@ -22,8 +22,6 @@ services:
       - key: PYTHON_VERSION
         value: 3.11.8
       - key: DATABASE_URL # Render PostgreSQL database
-        fromDatabase:
-          name: postgresql-trapezoidal-42170
-          property: connectionString
+
 
 
