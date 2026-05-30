@@ -12,7 +12,6 @@
     "build": "webpack --config webpack/webpack.prod.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d public"
-
   },
   "author": {
     "name": "Alejandro Sanchez",

@@ -6,7 +6,7 @@ import context from "react-bootstrap/esm/AccordionContext";
 export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-custom">
-			<Link className="navbar-brand" to="/mainpage">
+			<Link className="navbar-brand" to="./mainpage">
 				<img
 					className="navbar-image"
 					src="https://cdn11.bigcommerce.com/s-dl22izwaan/images/stencil/1280x1280/products/1048/18975/2215_1k__02095.1625592307.jpg?c=1"
@@ -27,17 +27,17 @@ export const Navbar = () => {
 			<div className="collapse navbar-collapse" id="navbarNav">
 				<ul className="navbar-nav ml-auto">
 					<li className="nav-item">
-						<Link className="nav-link" to="/meditation">
+						<Link className="nav-link" to="./meditation">
 							Meditation
 						</Link>
 					</li>
 					<li className="nav-item">
-						<Link className="nav-link" to="/resource">
+						<Link className="nav-link" to="./resource">
 							Resource
 						</Link>
 					</li>
 					<li className="nav-item">
-						<Link className="nav-link" to="/journal">
+						<Link className="nav-link" to="./journal">
 							Journal
 						</Link>
 					</li>

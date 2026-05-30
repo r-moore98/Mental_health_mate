@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Context } from "@/store/appContext";
 import "../../styles/home.css";
 
@@ -24,7 +24,7 @@ export const Home = () => {
 
 		// Use the functional return value or verify token state to safely navigate
 		if (success || store.token) {
-			navigate('/mainpage');
+			navigate('./mainpage');
 		}
 	};
 
@@ -83,7 +83,7 @@ export const Home = () => {
 					<button type="submit" className="formBtn regBtn">Login</button>
 				</div>
 
-				<a href="/signup">Click to sign up</a>
+				<Link to="./signup">Click to sign up</Link>
 			</form>
 		</div>
 	);
