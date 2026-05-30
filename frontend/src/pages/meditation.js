@@ -8,7 +8,7 @@ export const Meditation = () => {
     const [condition, setCondition] = useState("");
     const [result, setResult] = useState("");
     const [error, setError] = useState("");
-    const apiYoutube = YOUTUBE_KEY;
+    const apiYoutube = process.env.YOUTUBE_KEY;
 
     const getVideo = async () => {
         try {
