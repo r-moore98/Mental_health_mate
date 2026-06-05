@@ -5,7 +5,7 @@ services:
     env: python
     plan: free
 
-    runtime: python-3.11
+    runtime: python-3
     
 
     buildCommand: "./render_build.sh"
